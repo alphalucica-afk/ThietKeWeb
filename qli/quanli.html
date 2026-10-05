@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Quản Lý Cửa Hàng Điện Thoại</title>
+  <!-- Tailwind CSS & Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 50: '#f0f9ff', 500: '#0284c7', 600: '#0284c7', 700: '#0369a1' } } } } }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="quanli.css">
+</head>
+<body class="bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex">
+
+  <!-- Mobile Backdrop -->
+  <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden md:hidden"></div>
+
+  <!-- Sidebar Nav -->
+  <aside id="sidebarNav" class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col justify-between p-4 fixed inset-y-0 left-0 z-40 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-200 ease-in-out">
+    <div>
+      <div class="flex items-center justify-between px-2 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl shadow-md">P</div>
+          <div><h1 class="font-bold leading-tight">PhoneStore</h1><span class="text-xs text-slate-400 font-medium">Hệ Thống Quản Trị</span></div>
+        </div>
+        <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-slate-600 text-xl p-1">&times;</button>
+      </div>
+      <nav class="space-y-1">
+        <button onclick="switchView('view-dashboard', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 active-nav"><i class="fa-solid fa-chart-pie w-5"></i> Tổng quan</button>
+        <button onclick="switchView('view-orders', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700"><i class="fa-solid fa-cart-shopping w-5"></i> Quản lý đơn hàng</button>
+        <button onclick="switchView('view-products', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700"><i class="fa-solid fa-mobile-screen w-5"></i> Kho hàng 3 hãng</button>
+        <button onclick="switchView('view-users', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700"><i class="fa-solid fa-users w-5"></i> Quản lý khách hàng</button>
+        <button onclick="switchView('view-promotions', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700"><i class="fa-solid fa-tags w-5"></i> Khuyến mại</button>
+        <button onclick="switchView('view-reports', event)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Báo cáo doanh thu</button>
+      </nav>
+    </div>
+    <div class="pt-4 border-t border-slate-200 dark:border-slate-700 space-y-2">
+      <a href="../index.html" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-950/30 transition">
+        <i class="fa-solid fa-store w-5"></i> <span>Về trang chủ shop</span>
+      </a>
+      <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle-half-stroke w-5 text-slate-400"></i> Giao diện</span>
+        <i class="fa-solid fa-moon text-slate-400 dark:hidden"></i>
+        <i class="fa-solid fa-sun text-amber-400 hidden dark:inline"></i>
+      </button>
+      <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition"><i class="fa-solid fa-right-from-bracket w-5"></i> Đăng xuất</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+    <!-- Topbar -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSidebar()" class="md:hidden text-slate-600 dark:text-slate-300 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none" title="Mở danh mục">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+        <button onclick="openModal('addOrderModal')" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm transition"><i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Tạo đơn mới</span><span class="sm:hidden">Tạo đơn</span></button>
+        <button onclick="openModal('addProductModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm transition"><i class="fa-solid fa-box-archive"></i> <span class="hidden sm:inline">Nhập kho</span><span class="sm:hidden">Nhập kho</span></button>
+      </div>
+      <div class="text-xs text-slate-400 font-medium hidden sm:block">
+        Trạng thái: <span class="inline-flex items-center gap-1.5 text-emerald-600 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Đồng bộ tự động</span>
+      </div>
+    </header>
+
+    <div class="p-4 md:p-6 space-y-6 flex-1">
+      <!-- VIEW: DASHBOARD -->
+      <section id="view-dashboard" class="view-section space-y-6">
+        
+        <!-- Bộ chọn Ngày Tháng Năm trong phần Tổng quan -->
+        <div class="flex flex-wrap items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 gap-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-calendar-days text-brand-600 text-lg"></i>
+            <h2 class="font-bold text-slate-800 dark:text-slate-100">Thời gian xem báo cáo:</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Từ ngày:</span>
+              <input type="date" id="dashStartDate" onchange="handleDashboardDateChange()" class="bg-slate-100 dark:bg-slate-700 text-sm px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Đến ngày:</span>
+              <input type="date" id="dashEndDate" onchange="handleDashboardDateChange()" class="bg-slate-100 dark:bg-slate-700 text-sm px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            </div>
+            <button onclick="resetDashboardDateFilter()" class="text-xs px-3 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 font-semibold rounded-lg transition"><i class="fa-solid fa-arrows-rotate mr-1"></i> Tất cả thời gian</button>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Tổng doanh thu</span>
+            <div id="kpiRevenue" class="text-2xl font-black text-slate-900 dark:text-white mt-1">0 ₫</div>
+          </div>
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Tăng trưởng (Tháng)</span>
+            <div id="kpiMonthGrowth" class="text-xl font-bold mt-1 text-emerald-600">+0%</div>
+            <span class="text-[10px] text-slate-400">So với tháng trước</span>
+          </div>
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Đơn hàng mới</span>
+            <div id="kpiOrders" class="text-2xl font-black text-slate-900 dark:text-white mt-1">0</div>
+          </div>
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Tổng tồn kho</span>
+            <div id="kpiStock" class="text-2xl font-black text-slate-900 dark:text-white mt-1">0</div>
+          </div>
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <span class="text-xs text-slate-400 font-semibold uppercase">Tổng đã bán</span>
+            <div id="kpiSold" class="text-2xl font-black text-slate-900 dark:text-white mt-1">0</div>
+          </div>
+        </div>
+
+        <!-- Top Bán chạy & Bán chậm -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Bán chạy -->
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-bold text-lg text-emerald-600 flex items-center gap-2"><i class="fa-solid fa-fire"></i> Top Bán Chạy</h3>
+              <span class="text-xs text-slate-400">Số lượng bán cao nhất</span>
+            </div>
+            <div id="topBestSellers" class="space-y-3"></div>
+          </div>
+          <!-- Bán ế / Chậm -->
+          <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-bold text-lg text-rose-600 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Top Bán Chậm (Cần Xử Lý)</h3>
+              <span class="text-xs text-slate-400">Tồn cao / Bán ít</span>
+            </div>
+            <div id="topSlowSellers" class="space-y-3"></div>
+          </div>
+        </div>
+
+        <!-- Biểu đồ -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-lg">Biểu đồ so sánh sản lượng bán 3 hãng (Apple - Xiaomi - Vivo)</h3>
+            <span class="text-xs text-slate-400 font-medium">Theo ngày trong hệ thống</span>
+          </div>
+          <div class="h-64"><canvas id="dailyCompareChart"></canvas></div>
+        </div>
+
+        <!-- Bảng đơn hàng gần đây -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 overflow-hidden">
+          <div class="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+            <span class="font-bold text-base">Đơn hàng vừa cập nhật</span>
+            <button onclick="switchView('view-orders', event)" class="text-xs text-brand-600 hover:underline font-semibold">Xem tất cả &rarr;</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 text-xs uppercase">
+                <tr><th class="py-3 px-4">Mã đơn</th><th class="py-3 px-4">Khách hàng</th><th class="py-3 px-4">Sản phẩm</th><th class="py-3 px-4">Tổng tiền</th><th class="py-3 px-4">Trạng thái</th><th class="py-3 px-4">Đổi trạng thái</th></tr>
+              </thead>
+              <tbody id="recentOrdersTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: ORDERS -->
+      <section id="view-orders" class="view-section hidden space-y-4">
+        <div class="flex flex-wrap gap-3">
+          <select id="ordersBrandFilter" onchange="applyOrdersFilter()" class="bg-white dark:bg-slate-800 border dark:border-slate-700 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
+            <option value="all">Tất cả hãng</option><option value="Apple">Apple</option><option value="Xiaomi">Xiaomi</option><option value="Vivo">Vivo</option>
+          </select>
+          <select id="ordersStatusFilter" onchange="applyOrdersFilter()" class="bg-white dark:bg-slate-800 border dark:border-slate-700 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="pending">Đang chờ xử lý</option>
+            <option value="processing">Đang lên đơn</option>
+            <option value="shipping">Đang giao hàng</option>
+            <option value="completed">Đã nhận hàng</option>
+            <option value="cancelled">Đã hủy</option>
+          </select>
+          <input id="ordersSearchInput" type="text" onkeyup="applyOrdersFilter()" placeholder="Tìm kiếm theo mã đơn, tên khách, tỉnh thành..." class="bg-white dark:bg-slate-800 border dark:border-slate-700 px-3 py-2 rounded-lg text-sm flex-1 min-w-[200px] focus:ring-2 focus:ring-brand-500">
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 text-xs uppercase">
+                <tr><th class="py-3 px-4">Mã đơn</th><th class="py-3 px-4">Khách hàng</th><th class="py-3 px-4">Khu vực</th><th class="py-3 px-4">Sản phẩm</th><th class="py-3 px-4">Tổng tiền</th><th class="py-3 px-4">Ngày</th><th class="py-3 px-4">Trạng thái</th><th class="py-3 px-4 text-center">Thao tác</th></tr>
+              </thead>
+              <tbody id="fullOrdersTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: PRODUCTS -->
+      <section id="view-products" class="view-section hidden space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+          <div class="flex flex-wrap items-center gap-3 flex-1">
+            <select id="productsBrandFilter" onchange="applyProductsFilter()" class="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-3 py-2 rounded-lg text-sm">
+              <option value="all">Tất cả hãng (Apple, Xiaomi, Vivo)</option>
+              <option value="Apple">Apple</option>
+              <option value="Xiaomi">Xiaomi</option>
+              <option value="Vivo">Vivo</option>
+            </select>
+            <input id="productsSearchInput" type="text" onkeyup="applyProductsFilter()" placeholder="Tìm theo tên sản phẩm, mã SP..." class="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-3 py-2 rounded-lg text-sm flex-1 min-w-[200px]">
+          </div>
+          <button onclick="openModal('addProductModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm transition"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 text-xs uppercase">
+                <tr>
+                  <th class="py-3 px-4">Mã SP</th>
+                  <th class="py-3 px-4">Tên sản phẩm</th>
+                  <th class="py-3 px-4">Hãng</th>
+                  <th class="py-3 px-4">Giá bán</th>
+                  <th class="py-3 px-4">Tồn kho</th>
+                  <th class="py-3 px-4">Đã bán</th>
+                  <th class="py-3 px-4">Đánh giá</th>
+                  <th class="py-3 px-4 text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: USERS -->
+      <section id="view-users" class="view-section hidden space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+          <div>
+            <h3 class="font-bold text-lg">Danh sách khách hàng</h3>
+            <p class="text-xs text-slate-400">Tự động tổng hợp và phân hạng theo lịch sử mua hàng</p>
+          </div>
+          <input id="usersSearchInput" type="text" onkeyup="applyUsersFilter()" placeholder="Tìm theo tên, SĐT, tỉnh thành..." class="bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-3 py-2 rounded-lg text-sm min-w-[240px]">
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 text-xs uppercase">
+                <tr>
+                  <th class="py-3 px-4">Khách hàng</th>
+                  <th class="py-3 px-4">SĐT</th>
+                  <th class="py-3 px-4">Tỉnh thành</th>
+                  <th class="py-3 px-4">Số đơn</th>
+                  <th class="py-3 px-4">Tổng chi tiêu</th>
+                  <th class="py-3 px-4">Phân hạng</th>
+                  <th class="py-3 px-4 text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: PROMOTIONS -->
+      <section id="view-promotions" class="view-section hidden space-y-4">
+        <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200/60 dark:border-slate-700">
+          <h3 class="font-bold text-lg">Danh sách chương trình khuyến mại</h3>
+          <button onclick="openModal('addPromoModal')" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2"><i class="fa-solid fa-plus"></i> Thêm khuyến mại</button>
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 text-xs uppercase">
+                <tr>
+                  <th class="py-3 px-4">Mã KM</th>
+                  <th class="py-3 px-4">Tên chương trình</th>
+                  <th class="py-3 px-4">Mức giảm</th>
+                  <th class="py-3 px-4">Áp dụng cho</th>
+                  <th class="py-3 px-4">Hạn sử dụng</th>
+                  <th class="py-3 px-4">Trạng thái</th>
+                  <th class="py-3 px-4 text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="promotionsTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: REPORTS -->
+      <section id="view-reports" class="view-section hidden space-y-4">
+        <div class="flex flex-wrap justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-xl gap-3 border border-slate-200/60 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold">Chọn ngày xem báo cáo:</span>
+            <input type="date" id="reportDatePicker" onchange="renderDailySalesReport(this.value)" class="bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-lg text-sm border border-slate-200 dark:border-slate-600">
+          </div>
+          <button onclick="exportReportCSV()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition flex items-center gap-2 shadow-sm"><i class="fa-solid fa-file-excel"></i> Xuất CSV Báo Cáo (Excel)</button>
+        </div>
+
+        <!-- So sánh Doanh Thu Tháng -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-700 space-y-4">
+          <h3 class="font-bold text-lg text-brand-600 flex items-center gap-2"><i class="fa-solid fa-scale-balanced"></i> So sánh Doanh thu với Tháng Trước</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl">
+              <div class="text-xs text-slate-400 font-semibold uppercase">Doanh thu tháng trước</div>
+              <div id="prevMonthRevText" class="text-xl font-black text-slate-700 dark:text-slate-200 mt-1">0 ₫</div>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl">
+              <div class="text-xs text-slate-400 font-semibold uppercase">Doanh thu tháng này</div>
+              <div id="currMonthRevText" class="text-xl font-black text-brand-600 mt-1">0 ₫</div>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl">
+              <div class="text-xs text-slate-400 font-semibold uppercase">Chênh lệch / Tăng trưởng</div>
+              <div id="monthDiffText" class="text-xl font-black text-emerald-600 mt-1">0 ₫ (+0%)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doanh thu theo hãng trong ngày -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700 shadow-sm"><div class="text-xs text-slate-400 font-semibold uppercase">Apple (Trong ngày)</div><div id="dailyAppleRevenue" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0 ₫</div></div>
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700 shadow-sm"><div class="text-xs text-slate-400 font-semibold uppercase">Xiaomi (Trong ngày)</div><div id="dailyXiaomiRevenue" class="text-lg font-bold text-orange-600 mt-1">0 ₫</div></div>
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700 shadow-sm"><div class="text-xs text-slate-400 font-semibold uppercase">Vivo (Trong ngày)</div><div id="dailyVivoRevenue" class="text-lg font-bold text-blue-600 mt-1">0 ₫</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- MODAL: TẠO ĐƠN HÀNG -->
+  <div id="addOrderModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center font-bold text-lg border-b pb-3 dark:border-slate-700">
+        <span>Tạo đơn hàng mới</span>
+        <button onclick="closeModal('addOrderModal')" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+      </div>
+      <form id="newOrderForm" onsubmit="handleCreateNewOrder(event)" class="space-y-3 text-sm">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Tên khách hàng</label>
+          <input type="text" id="formCustName" placeholder="Nhập tên khách hàng" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Số điện thoại</label>
+          <input type="tel" id="formCustPhone" placeholder="09xxxxxxxx" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Tỉnh / Thành</label>
+            <select id="formProvince" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+              <option value="Hà Nội">Hà Nội</option>
+              <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+              <option value="Đà Nẵng">Đà Nẵng</option>
+              <option value="Hải Phòng">Hải Phòng</option>
+              <option value="Cần Thơ">Cần Thơ</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Quận / Huyện</label>
+            <input type="text" id="formDistrict" placeholder="Quận / Huyện" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Địa chỉ chi tiết</label>
+          <input type="text" id="formStreetAddress" placeholder="Số nhà, tên đường..." required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Sản phẩm</label>
+          <select id="formProductSelect" onchange="handleFormProductChange()" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600"></select>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Số lượng</label>
+            <input type="number" id="formQuantity" value="1" min="1" oninput="updateFormOrderTotal()" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Trạng thái ban đầu</label>
+            <select id="formOrderStatus" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+              <option value="pending">Đang chờ xử lý</option>
+              <option value="processing">Đang lên đơn</option>
+              <option value="shipping">Đang giao hàng</option>
+              <option value="completed">Đã nhận hàng</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-between items-center font-bold pt-3 border-t dark:border-slate-700">
+          <span>Thành tiền:</span>
+          <span id="formOrderTotalText" class="text-emerald-600 text-xl font-extrabold">0 ₫</span>
+        </div>
+        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition">Xác nhận tạo đơn</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NHẬP KHO SẢN PHẨM -->
+  <div id="addProductModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4">
+      <div class="flex justify-between items-center font-bold text-lg border-b pb-3 dark:border-slate-700">
+        <span>Thêm sản phẩm mới vào kho</span>
+        <button onclick="closeModal('addProductModal')" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+      </div>
+      <form id="newProductForm" onsubmit="handleCreateProduct(event)" class="space-y-3 text-sm">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Tên điện thoại</label>
+          <input type="text" id="prodName" placeholder="VD: iPhone 16 Pro Max 512GB" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Hãng sản xuất</label>
+          <select id="prodBrand" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+            <option value="Apple">Apple</option>
+            <option value="Xiaomi">Xiaomi</option>
+            <option value="Vivo">Vivo</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Giá bán (VNĐ)</label>
+          <input type="number" id="prodPrice" placeholder="VD: 34990000" min="100000" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Số lượng nhập ban đầu</label>
+          <input type="number" id="prodStock" placeholder="VD: 20" min="1" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">Thêm vào kho</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: THÊM KHUYẾN MẠI -->
+  <div id="addPromoModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl p-6 space-y-4">
+      <div class="flex justify-between items-center font-bold text-lg border-b pb-3 dark:border-slate-700">
+        <span>Thêm chương trình khuyến mại</span>
+        <button onclick="closeModal('addPromoModal')" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+      </div>
+      <form id="newPromoForm" onsubmit="handleCreatePromo(event)" class="space-y-3 text-sm">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Mã giảm giá</label>
+          <input type="text" id="promoCode" placeholder="VD: TET2026, VIP10" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border uppercase font-bold border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Tên chương trình</label>
+          <input type="text" id="promoTitle" placeholder="VD: Siêu Sale Khai Xuân 2026" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">% Giảm giá (1 - 100%)</label>
+          <input type="number" id="promoDiscount" placeholder="VD: 15" min="1" max="100" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Phạm vi áp dụng</label>
+          <select id="promoTarget" class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+            <option value="Tất cả hãng">Tất cả sản phẩm</option>
+            <option value="Apple">Chỉ dành cho Apple</option>
+            <option value="Xiaomi">Chỉ dành cho Xiaomi</option>
+            <option value="Vivo">Chỉ dành cho Vivo</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Hạn sử dụng</label>
+          <input type="date" id="promoExpiry" required class="w-full p-2.5 bg-slate-100 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+        </div>
+        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition">Tạo Khuyến Mại</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: XEM ĐƠN HÀNG CỦA KHÁCH -->
+  <div id="customerOrdersModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-2xl p-6 space-y-4 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center font-bold text-lg border-b pb-3 dark:border-slate-700">
+        <span id="custModalTitle">Chi tiết đơn hàng của khách</span>
+        <button onclick="closeModal('customerOrdersModal')" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+      </div>
+      <div id="custModalBody" class="overflow-y-auto space-y-3 flex-1 pr-1 text-sm"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 space-y-2 z-50 pointer-events-none"></div>
+
+  <script src="quanli.js"></script>
+</body>
+</html>

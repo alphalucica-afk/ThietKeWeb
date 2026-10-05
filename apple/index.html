@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điện thoại</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome cho icon header -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Nền toàn trang màu hồng nhạt */
+        body {
+            background-color: #ffe6eb;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: #ffb6c1;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #d81b60;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        nav a {
+            color: #d81b60;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #c2185b;
+            margin-bottom: 30px;
+        }
+
+        /* Cấu hình 2 hàng 3 cột bằng CSS Grid */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 cột bằng nhau */
+            gap: 25px;
+            /* Khoảng cách giữa các ô */
+        }
+
+        /* Thẻ sản phẩm */
+        .product {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.15);
+            border: 1px solid #f8bbd0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product h2 {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .product .price {
+            font-weight: bold;
+            color: #e91e63;
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .product button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product button:hover {
+            background-color: #c2185b;
+        }
+
+        /* Tương thích màn hình nhỏ */
+        @media (max-width: 900px) {
+            .product-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-mobile-screen-button"></i> SHOP ĐIỆN THOẠI
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index.html" style="text-decoration: none;">Trang chủ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <h1>Điện thoại - iPhone Series</h1>
+
+        <div class="product-list">
+
+            <div class="product">
+                <img src="./anh/iphone-17-pro-max-cam.jpg.webp" alt="iPhone 17 Pro Max">
+                <h2>iPhone 17 Pro Max</h2>
+                <p class="price">37.450.000 ₫</p>
+                <button onclick="window.location.href='./17prm/17prm.html'">
+                    MUA
+                </button>
+            </div>
+
+            <div class="product">
+                <img src="./anh/iphone-17-pro-xanh-dam.jpg.webp" alt="iPhone 17 Pro">
+                <h2>iPhone 17 Pro</h2>
+                <p class="price">34.999.000 ₫</p>
+                <button onclick="window.location.href='./17pro/17pro.html'">
+                    MUA
+                </button>
+            </div>
+
+            <div class="product">
+                <img src="./anh/iphone-17-tim.jpg.webp" alt="iPhone 17">
+                <h2>iPhone 17</h2>
+                <p class="price">24.990.000 ₫</p>
+                <button onclick="window.location.href='./17/17.html'">
+                    MUA
+                </button>
+            </div>
+
+            <div class="product">
+                <img src="./anh/iphone-16-pro-max-titan-sa-mac.jpg.webp" alt="iPhone 16 Pro Max">
+                <h2>iPhone 16 Pro Max</h2>
+                <p class="price">29.350.000 ₫</p>
+                <button onclick="window.location.href='./16prm/16prm.html'">
+                    MUA
+                </button>
+            </div>
+
+            <div class="product">
+                <img src="./anh/iphone-16-pro-old-titan-trang.jpg.webp" alt="iPhone 16 Pro">
+                <h2>iPhone 16 Pro</h2>
+                <p class="price">20.000.000 ₫</p>
+                <button onclick="window.location.href='./16p/16p.html'">
+                    MUA
+                </button>
+            </div>
+
+            <div class="product">
+                <img src="./anh/iphone-16-hong.jpg.webp" alt="iPhone 16">
+                <h2>iPhone 16</h2>
+                <p class="price">17.950.000 ₫</p>
+                <button onclick="window.location.href='./16/16.html'">
+                    MUA
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

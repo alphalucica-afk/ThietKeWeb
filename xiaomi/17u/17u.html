@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điện thoại Xiaomi 17 Ultra 5G (Ống kính Leica LOFIC 1-inch - Snapdragon 8 Gen Next)</title>
+    <link rel="stylesheet" href="17u.css">
+</head>
+
+<body>
+    <!-- Sticky Header Navigation -->
+    <header class="top-navbar">
+        <div class="navbar-content">
+            <a href="/" class="nav-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Trang chủ
+            </a>
+
+            <div class="cart-btn-wrapper">
+                <button class="nav-btn" id="cartNavBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    Giỏ hàng
+                </button>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Title -->
+        <div class="product-header">
+            <h1 class="product-title" id="productTitle">Điện thoại Xiaomi 17 Ultra 5G (Màn 6.73" 2K+ LTPO AMOLED - Leica Quad Camera 200MP Tele)</h1>
+        </div>
+
+        <!-- Images Gallery -->
+        <div class="image-gallery-container">
+            <div class="thumbs-row">
+                <div class="thumb-cell">
+                    <div class="thumb-box active" onclick="selectThumb(this)">
+                        <img src="./anh17u/xiaomi-17-ultra-5g-mau-4.jpg" alt="Đen ">
+                    </div>
+                    <span class="thumb-label">Đen </span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh17u/xiaomi-17-ultra-5g-mau-3.jpg" alt="Trắng ">
+                    </div>
+                    <span class="thumb-label">Trắng </span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh17u/xiaomi-17-ultra-5g-mau-2.jpg" alt="Xanh ">
+                    </div>
+                    <span class="thumb-label">Xanh </span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh17u/xiaomi-17-ultra-5g-mau-1.jpg" alt="Tím">
+                    </div>
+                    <span class="thumb-label">Tím</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Options & Actions -->
+        <div class="product-options-section">
+            <div class="price-box">
+                Giá bán: <span id="priceValue">29.950.000</span> <span class="price-currency">đ</span>
+            </div>
+
+            <div>
+                <div class="option-label">Màu sắc: <strong id="selectedColorName">Đen </strong></div>
+                <div class="color-options">
+                    <div class="color-box color-ultra-black selected" data-color="Đen " data-price-offset="0"></div>
+                    <div class="color-box color-ultra-white" data-color="Trắng " data-price-offset="0"></div>
+                    <div class="color-box color-ultra-green" data-color="Xanh " data-price-offset="0"></div>
+                    <div class="color-box color-ultra-Purple" data-color="Tím" data-price-offset="1500000"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="option-label">Bộ nhớ:</div>
+                <div class="storage-options">
+                    <button class="storage-btn selected" data-storage="16GB/512GB" data-base-price="29950000">16GB/512GB</button>
+                    <button class="storage-btn" data-storage="16GB/1TB" data-base-price="33450000">16GB/1TB</button>
+                    <button class="storage-btn" data-storage="24GB/1TB Photography Kit" data-base-price="37950000">24GB/1TB + Photography Kit</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="option-label">Số lượng:</div>
+                <div class="quantity-control">
+                    <button class="qty-btn" id="btnMinus">-</button>
+                    <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="99">
+                    <button class="qty-btn" id="btnPlus">+</button>
+                </div>
+            </div>
+
+            <div class="warranty">
+                Thời gian bảo hành: <strong>Bảo Hành 12 Tháng</strong> <a href="#">(Xem chi tiết)</a>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-add-cart" id="addToCartBtn">THÊM VÀO GIỎ HÀNG</button>
+                <button class="btn btn-buy-now" id="buyNowBtn">ĐẶT HÀNG NGAY</button>
+            </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="specs-section">
+            <h2 class="specs-title">Thông Số Kỹ Thuật Xiaomi 17 Ultra 5G</h2>
+            <table class="specs-table">
+                <tbody>
+                    <tr>
+                        <td class="specs-label">Thiết kế:</td>
+                        <td class="specs-value">Khung hợp kim Titanium Grade 5 / Mặt lưng da sinh học cao cấp chống bám bẩn hoặc Gốm Ceramic; Chuẩn kháng nước/bụi IP68/IP69; Kính bảo vệ Xiaomi Shield Glass 2</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Màn hình:</td>
+                        <td class="specs-value">6.73 inch LTPO AMOLED Micro-Curved WQHD+, 68 tỷ màu, 1-120Hz thích ứng, Dolby Vision, HDR10+, độ phân giải 2K+ (1440 x 3200 pixels), độ sáng tối đa 4500 nits, PWM Dimming 2160Hz</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Hệ điều hành:</td>
+                        <td class="specs-value">Android 16, Xiaomi HyperOS 3.0 Ultra Pro (Tích hợp bộ công cụ chụp ảnh chuyên nghiệp AI Master Imaging)</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Chipset (CPU):</td>
+                        <td class="specs-value">Qualcomm Snapdragon Extreme Edition Pro (3nm), Chip xử lý hình ảnh độc lập Surge C4 & Surge P3, Tản nhiệt 3D Dual-Loop IceLoop Chuyên Dụng</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Bộ nhớ trong:</td>
+                        <td class="specs-value">512GB / 1TB (UFS 4.1 Ultra Read/Write Speed)</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">RAM:</td>
+                        <td class="specs-value">16GB / 24GB LPDDR5X Ultra Speed</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Camera sau (Leica Vario-Summilux Ultra System):</td>
+                        <td class="specs-value">
+                            Chính: 50 MP, Cảm biến LOFIC 1-inch Sony LYT-900, f/1.6-f/4.0 vô cấp, OIS Gimbal<br>
+                            Tele tiềm vọng 1: 200 MP, f/2.6, Zoom quang 4.3x, Zoom kỹ thuật số 120x, Tele Macro 30cm, OIS<br>
+                            Tele tiềm vọng 2: 50 MP, f/1.8, Zoom quang 3.2x, Chân dung chuẩn Leica, OIS<br>
+                            Góc siêu rộng: 50 MP, f/1.8, 122˚, AF Ultra-wide, Chụp siêu cận 5cm
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Camera trước:</td>
+                        <td class="specs-value">50 MP, f/2.0, Quay video 4K@60fps Dolby Vision, Tự động lấy nét theo mắt AI Master</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Dung lượng pin & Sạc:</td>
+                        <td class="specs-value">Pin Si-Anode thế hệ 4 6200 mAh, Sạc nhanh có dây 120W HyperCharge, Sạc không dây 80W Ultra Fast, Sạc ngược không dây 15W</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Thẻ SIM & Kết nối:</td>
+                        <td class="specs-value">2 Nano SIM / Dual eSIM, 5G Dual Active, Wi-Fi 7, Bluetooth 5.4, NFC, Mắt hồng ngoại IR, USB Type-C 3.2 Gen 2 (xuất hình 4K60Hz), Kết nối Vệ tinh Khẩn cấp 2 chiều</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Bảo mật & Âm thanh:</td>
+                        <td class="specs-value">Cảm biến vân tay siêu âm 3D thế hệ mới dưới màn hình, Hệ thống 4 micro thu âm 3D, Loa kép Stereo Leica Tuning & Dolby Atmos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal Đặt Hàng -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Xác Nhận Đặt Hàng</h3>
+                <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
+            </div>
+
+            <div class="order-summary">
+                <div><strong>Sản phẩm:</strong> Xiaomi 17 Ultra</div>
+                <div><strong>Cấu hình:</strong> <span id="summaryOption">16GB/512GB - Đen Da Premium</span></div>
+                <div><strong>Số lượng:</strong> <span id="summaryQty">1</span></div>
+                <div><strong>Tổng tiền:</strong> <span id="summaryPrice" style="color:#d0021b; font-weight:bold;">29.950.000 đ</span></div>
+            </div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="fullname">Họ và tên *</label>
+                    <input type="text" id="fullname" required placeholder="Nhập họ và tên người nhận">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại *</label>
+                    <input type="tel" id="phone" required placeholder="Ví dụ: 0912345678" maxlength="10">
+                    <div class="error-msg" id="phoneError">Số điện thoại phải đủ 10 chữ số và bắt đầu bằng số 0.</div>
+                </div>
+                <div class="form-group">
+                    <label for="province">Tỉnh / Thành phố *</label>
+                    <select id="province" required class="select-input">
+                        <option value="">-- Chọn Tỉnh / Thành Phố --</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                        <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                        <option value="Đà Nẵng">Đà Nẵng</option>
+                        <option value="Hải Phòng">Hải Phòng</option>
+                        <option value="Cần Thơ">Cần Thơ</option>
+                        <option value="Thái Bình">Thái Bình</option>
+                        <option value="Quảng Ninh">Quảng Ninh</option>
+                        <option value="Bắc Ninh">Bắc Ninh</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="district">Quận / Huyện *</label>
+                    <input type="text" id="district" required placeholder="Ví dụ: Quận Cầu Giấy, Nam Từ Liêm...">
+                </div>
+                <div class="form-group">
+                    <label for="street">Số nhà, tên đường *</label>
+                    <input type="text" id="street" required placeholder="Ví dụ: Số 120 Trịnh Văn Bô">
+                </div>
+                <button type="submit" class="btn-submit">XÁC NHẬN MUA HÀNG</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Giỏ Hàng -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Giỏ Hàng Của Bạn</h3>
+                <button class="close-btn" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+
+            <div id="cartItemsList">
+                <!-- Chi tiết giỏ hàng sẽ được render từ JS -->
+            </div>
+
+            <div class="cart-total-footer">
+                Tổng tiền: <span id="cartTotalPrice" style="color: #d0021b;">0 đ</span>
+            </div>
+
+            <button class="btn-submit" style="margin-top: 15px;" id="checkoutCartBtn">TIẾN HÀNH THANH TOÁN</button>
+        </div>
+    </div>
+
+    <!-- Đồng bộ hệ thống Admin PhoneStore -->
+    <script src="/BTL.1/store-sync.js"></script>
+    <script src="17u.js"></script>
+</body>
+
+</html>

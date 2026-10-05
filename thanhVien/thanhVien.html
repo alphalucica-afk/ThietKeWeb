@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu thành viên</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffe6eb;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 0;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .title h1 {
+            font-size: 42px;
+            color: #b74e6a;
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #777;
+            font-size: 17px;
+        }
+
+        .members {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .member {
+            width: 31%;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(183, 78, 106, 0.15);
+            transition: 0.3s;
+        }
+
+        .member:hover {
+            transform: translateY(-8px);
+        }
+
+        .member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffb6c1;
+            margin-bottom: 20px;
+        }
+
+        .member h2 {
+            color: #b74e6a;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .member p {
+            text-align: left;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .member strong {
+            color: #b74e6a;
+        }
+
+        @media (max-width: 800px) {
+            .members {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .member {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="title">
+            <h1>Giới thiệu thành viên</h1>
+            <p>Thông tin các thành viên thực hiện đề tài website bán điện thoại</p>
+        </div>
+
+        <div class="members">
+
+            <!-- Thành viên 1 -->
+            <div class="member">
+                <img src="./anhThanhVien/xuan.jpg" alt="Thành viên 1">
+
+                <h2>Nguyễn Viết Xuân</h2>
+
+                <p>
+                    <strong>Mã SV:</strong> 25000048
+                </p>
+
+                <p>
+                    <strong>Họ tên:</strong> Nguyễn Viết Xuân
+                </p>
+
+                <p>
+                    <strong>Sở thích:</strong> Chơi game, nghe nhạc,
+                    xem phim và tìm hiểu công nghệ.
+                </p>
+
+                <p>
+                    <strong>Vai trò:</strong>Thiết kế trang chủ , trang sản phẩm Vivo, Xiaomi, Apple và các chức năng chung
+                </p>
+            </div>
+
+
+            <!-- Thành viên 2 -->
+            <div class="member">
+                <img src="./anhThanhVien/1791004661076_323229235674037307_323229235674037307_e3c3423fee60f0e80ea2db8c03fcf991.jpg" alt="Thành viên 2">
+
+                <h2>Đặng Thị Như Đào</h2>
+
+                <p>
+                    <strong>Mã SV:</strong> 25000334
+                </p>
+
+                <p>
+                    <strong>Họ tên:</strong> Đặng Thị Như Đào
+                </p>
+
+                <p>
+                    <strong>Sở thích:</strong> Đọc sách, nghe nhạc,
+                    chơi thể thao và công nghệ.
+                </p>
+
+                <p>
+                    <strong>Vai trò:</strong>Thiết kế các trang chi tiết sản phẩm Vivo, Xiaomi, Apple và các chức năng của các sản phẩm
+                </p>
+            </div>
+
+
+            <!-- Thành viên 3 -->
+            <div class="member">
+                <img src="./anhThanhVien/uyen.jpg" alt="Thành viên 3">
+
+                <h2>Tô Thị Thu Uyên</h2>
+
+                <p>
+                    <strong>Mã SV:</strong> 25000058
+                </p>
+
+                <p>
+                    <strong>Họ tên:</strong> Tô Thị Thu Uyên
+                </p>
+
+                <p>
+                    <strong>Sở thích:</strong> Chụp ảnh, du lịch,
+                    nghe nhạc và chơi game.
+                </p>
+
+                <p>
+                    <strong>Vai trò:</strong> Thiết kế Admin, header, footer và các chức năng chung của Admin
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

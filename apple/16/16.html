@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điện thoại iPhone 16 (Apple A18)</title>
+    <link rel="stylesheet" href="./16.css">
+</head>
+<body>
+    <!-- Sticky Header Navigation -->
+    <header class="top-navbar">
+        <div class="navbar-content">
+            <a href="/" class="nav-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Trang chủ
+            </a>
+
+            <div class="cart-btn-wrapper">
+                <button class="nav-btn" id="cartNavBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    Giỏ hàng
+                </button>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Title -->
+        <div class="product-header">
+            <h1 class="product-title" id="productTitle">Điện thoại iPhone 16 (Apple A18)</h1>
+        </div>
+
+        <!-- Images Gallery -->
+        <div class="image-gallery-container">
+            <div class="thumbs-row">
+                <div class="thumb-cell">
+                    <div class="thumb-box active" onclick="selectThumb(this)">
+                        <img src="./anh16/iphone-16-xanh-luu-ly.jpg" alt="Xanh Lưu Ly">
+                    </div>
+                    <span class="thumb-label">Xanh Lưu Ly</span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh16/iphone-16-xanh-mong-ket.jpg" alt="Xanh Lục Bạc">
+                    </div>
+                    <span class="thumb-label">Xanh Lục Bạc</span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh16/iphone-16-hong.jpg" alt="Hồng">
+                    </div>
+                    <span class="thumb-label">Hồng</span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh16/iphone-16-trang.jpg" alt="Trắng">
+                    </div>
+                    <span class="thumb-label">Trắng</span>
+                </div>
+                <div class="thumb-cell">
+                    <div class="thumb-box" onclick="selectThumb(this)">
+                        <img src="./anh16/iphone-16-den.jpg" alt="Đen">
+                    </div>
+                    <span class="thumb-label">Đen</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Options & Actions -->
+        <div class="product-options-section">
+            <div class="price-box">
+                Giá bán: <span id="priceValue">21.950.000</span> <span class="price-currency">đ</span>
+            </div>
+
+            <div>
+                <div class="option-label">Màu sắc: <strong id="selectedColorName">Xanh Lưu Ly</strong></div>
+                <div class="color-options">
+                    <div class="color-box color-ultramarine selected" data-color="Xanh Lưu Ly" data-price-offset="0"></div>
+                    <div class="color-box color-teal" data-color="Xanh Lục Bạc" data-price-offset="0"></div>
+                    <div class="color-box color-pink" data-color="Hồng" data-price-offset="0"></div>
+                    <div class="color-box color-white" data-color="Trắng" data-price-offset="0"></div>
+                    <div class="color-box color-black" data-color="Đen" data-price-offset="0"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="option-label">Bộ nhớ:</div>
+                <div class="storage-options">
+                    <button class="storage-btn selected" data-storage="8GB/128GB" data-base-price="21950000">8GB/128GB</button>
+                    <button class="storage-btn" data-storage="8GB/256GB" data-base-price="24950000">8GB/256GB</button>
+                    <button class="storage-btn" data-storage="8GB/512GB" data-base-price="30950000">8GB/512GB</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="option-label">Số lượng:</div>
+                <div class="quantity-control">
+                    <button class="qty-btn" id="btnMinus">-</button>
+                    <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="99">
+                    <button class="qty-btn" id="btnPlus">+</button>
+                </div>
+            </div>
+
+            <div class="warranty">
+                Thời gian bảo hành: <strong>Bảo Hành 12 Tháng</strong> <a href="#">(Xem chi tiết)</a>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-add-cart" id="addToCartBtn">THÊM VÀO GIỎ HÀNG</button>
+                <button class="btn btn-buy-now" id="buyNowBtn">ĐẶT HÀNG NGAY</button>
+            </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="specs-section">
+            <h2 class="specs-title">Thông Số Kỹ Thuật</h2>
+            <table class="specs-table">
+                <tbody>
+                    <tr>
+                        <td class="specs-label">Thiết kế:</td>
+                        <td class="specs-value">Khung Nhôm chuẩn hàng không vũ trụ, mặt lưng kính pha màu Ceramic Shield; 147.6 x 71.6 x 7.8 mm; 170 g; Kháng nước bụi IP68</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Màn hình:</td>
+                        <td class="specs-value">6.1 inch, Super Retina XDR OLED, Dynamic Island, HDR10, Dolby Vision, độ phân giải 1179 x 2556 pixels, độ sáng tối đa 2000 nits, kính Ceramic Shield thế hệ mới</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Hệ điều hành:</td>
+                        <td class="specs-value">iOS 18 (Cập nhật lâu dài)</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Chipset (CPU):</td>
+                        <td class="specs-value">Apple A18 (3 nm thế hệ 2), CPU 6 nhân (2 nhân hiệu năng + 4 nhân tiết kiệm điện), GPU 5 nhân Apple GPU, NPU Neural Engine 16 nhân hỗ trợ Apple Intelligence</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Bộ nhớ trong:</td>
+                        <td class="specs-value">128GB / 256GB / 512GB (NVMe)</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">RAM:</td>
+                        <td class="specs-value">8GB LPDDR5X</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Camera sau:</td>
+                        <td class="specs-value">
+                            48 MP, f/1.6, 26mm (góc rộng), Sensor-shift OIS, Dual Pixel PDAF<br>
+                            12 MP, f/2.2, 13mm, 120˚ (góc siêu rộng), Dual Pixel PDAF, hỗ trợ chụp Macro<br>
+                            Quay phim 4K@60fps Dolby Vision HDR, Spatial Video
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Camera trước:</td>
+                        <td class="specs-value">12 MP, f/1.9 (góc rộng), Autofocus, OIS, quay video 4K@60fps Dolby Vision HDR</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Dung lượng pin & Sạc:</td>
+                        <td class="specs-value">Pin Li-Ion 3561 mAh, sạc nhanh dây 25W (50% trong 30 phút), sạc không dây MagSafe 25W, Qi2 wireless charging 15W</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Thẻ SIM & Kết nối:</td>
+                        <td class="specs-value">Dual eSIM hoặc 1 Nano SIM + 1 eSIM, 5G, Wi-Fi 7, Bluetooth 5.3, USB Type-C 2.0, DisplayPort, NFC, Ultra Wideband (UWB) gen 2</td>
+                    </tr>
+                    <tr>
+                        <td class="specs-label">Bảo mật & Cảm biến:</td>
+                        <td class="specs-value">Face ID 3D, Nút điều khiển camera (Camera Control), Nút hành động (Action Button), Cảm biến gia tốc, Con quay hồi chuyển, Cảm biến tiệm cận, Dữ liệu vệ tinh SOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal Đặt Hàng -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Xác Nhận Đặt Hàng</h3>
+                <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
+            </div>
+
+            <div class="order-summary">
+                <div><strong>Sản phẩm:</strong> iPhone 16</div>
+                <div><strong>Cấu hình:</strong> <span id="summaryOption">128GB - Xanh Lưu Ly</span></div>
+                <div><strong>Số lượng:</strong> <span id="summaryQty">1</span></div>
+                <div><strong>Tổng tiền:</strong> <span id="summaryPrice" style="color:#d0021b; font-weight:bold;">21.950.000 đ</span></div>
+            </div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="fullname">Họ và tên *</label>
+                    <input type="text" id="fullname" required placeholder="Nhập họ và tên người nhận">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại *</label>
+                    <input type="tel" id="phone" required placeholder="Ví dụ: 0912345678" maxlength="10">
+                    <div class="error-msg" id="phoneError">Số điện thoại phải đủ 10 chữ số và bắt đầu bằng số 0.</div>
+                </div>
+                <div class="form-group">
+                    <label for="province">Tỉnh / Thành phố *</label>
+                    <select id="province" required class="select-input">
+                        <option value="">-- Chọn Tỉnh / Thành Phố --</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                        <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                        <option value="Đà Nẵng">Đà Nẵng</option>
+                        <option value="Hải Phòng">Hải Phòng</option>
+                        <option value="Cần Thơ">Cần Thơ</option>
+                        <option value="Thái Bình">Thái Bình</option>
+                        <option value="Quảng Ninh">Quảng Ninh</option>
+                        <option value="Bắc Ninh">Bắc Ninh</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="district">Quận / Huyện *</label>
+                    <input type="text" id="district" required placeholder="Ví dụ: Quận Hoàn Kiếm, TP. Thủ Đức...">
+                </div>
+                <div class="form-group">
+                    <label for="street">Số nhà, tên đường *</label>
+                    <input type="text" id="street" required placeholder="Ví dụ: Số 18 Phố Huế, P. Hàng Bài">
+                </div>
+                <button type="submit" class="btn-submit">XÁC NHẬN MUA HÀNG</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Giỏ Hàng -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Giỏ Hàng Của Bạn</h3>
+                <button class="close-btn" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+
+            <div id="cartItemsList">
+                <!-- Chi tiết giỏ hàng sẽ được render bằng JS -->
+            </div>
+
+            <div class="cart-total-footer">
+                Tổng tiền: <span id="cartTotalPrice" style="color: #d0021b;">0 đ</span>
+            </div>
+
+            <button class="btn-submit" style="margin-top: 15px;" id="checkoutCartBtn">TIẾN HÀNH THANH TOÁN</button>
+        </div>
+    </div>
+
+    <!-- Đồng bộ hệ thống Admin PhoneStore -->
+    <script src="/store-sync.js"></script>
+    <script src="./16.js"></script>
+</body>
+
+</html>
